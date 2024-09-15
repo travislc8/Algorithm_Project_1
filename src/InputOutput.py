@@ -1,4 +1,39 @@
 
+def publicLoop():
+    print("in publicLoop")
+    list = ["one", "two", "three"]
+    while (1):
+        choice = publicUserPrompt()
+        if (choice == "1"):
+            sendMessagePrompt()
+        elif (choice == "2"):
+            authenticatePrompt(list)
+        elif (choice == "3"):
+            break
+        else:
+            print("Invalid Choice")
+
+
+def privateLoop():
+    print("in privateLoop")
+    list = ["one", "two", "three"]
+    while (1):
+        choice = privateUserPrompt()
+
+        if (choice == "1"):
+            decryptPrompt(list)
+        elif (choice == "2"):
+            signMessagePrompt()
+        elif (choice == "3"):
+            showKeysPrompt()
+        elif (choice == "4"):
+            generatePrompt()
+        elif (choice == "5"):
+            break
+        else:
+            print("Invalid Choice")
+
+
 def getUserType():
     print("Please select your user type:")
     print("\t1. A Public user")
