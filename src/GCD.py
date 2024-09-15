@@ -17,8 +17,8 @@ def gcd(a, b):
 
 
 def extendedGCD(a, b):
-    if a < b:
-        raise ValueError("variable a must be greater than variable b")
+    # if a < b:
+    # raise ValueError("variable a must be greater than variable b")
     if b == 0:
         return (1, 0, a)
     (x, y, d) = extendedGCD(b, a % b)
