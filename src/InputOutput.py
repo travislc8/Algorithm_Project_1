@@ -1,7 +1,7 @@
 import src.RSA as rsa
 
 
-def publicLoop(public_key, list):
+def publicLoop(public_key, n, list):
     print("in publicLoop")
 
     while (1):
@@ -17,16 +17,16 @@ def publicLoop(public_key, list):
     return public_key, list
 
 
-def privateLoop(private_key, public_key, list):
+def privateLoop(private_key, public_key, n, list):
     print("in privateLoop")
     list = ["one", "two", "three"]
     while (1):
         choice = privateUserPrompt()
 
         if (choice == "1"):
-            decryptPrompt(list, public_key)
+            decryptPrompt(list, public_key, n)
         elif (choice == "2"):
-            encrypted_message = sendMessagePrompt(private_key)
+            encrypted_message = sendMessagePrompt(private_key, n)
             list.add(encrypted_message)
         elif (choice == "3"):
             showKeysPrompt(private_key, public_key)
@@ -57,10 +57,10 @@ def publicUserPrompt():
     return choice
 
 
-def sendMessagePrompt(private_key):
+def sendMessagePrompt(private_key, n):
     print("sendMessagePrompt")
     message = input("Enter a message: ")
-    # encrypted_message = rsa.encrypt(private_key, message)
+    # encrypted_message = rsa.encrypt(private_key, message, n)
     encrypted_message = message
     return encrypted_message
 
