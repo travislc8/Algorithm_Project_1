@@ -1,5 +1,4 @@
 import random as rand
-import src.RSA as rsa
 import src.GCD as gcd
 
 

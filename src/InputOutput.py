@@ -2,18 +2,18 @@ import src.RSA as rsa
 
 
 def publicLoop(public_key, n, list):
-    print("in publicLoop")
-
     while (1):
         choice = publicUserPrompt()
         if (choice == "1"):
-            sendMessagePrompt(list, public_key)
+            encrypted_message = sendMessagePrompt(public_key, n)
+            list.append(encrypted_message)
         elif (choice == "2"):
             authenticatePrompt(list, public_key)
         elif (choice == "3"):
+            print("\n\n")
             break
         else:
-            print("Invalid Choice")
+            print("Invalid Choice\n\n")
     return public_key, list
 
 
@@ -31,8 +31,10 @@ def privateLoop(private_key, public_key, n, list):
         elif (choice == "4"):
             generatePrompt()
         elif (choice == "5"):
+            print("\n\n")
             break
         else:
+            print("\n\n")
             print("Invalid Choice")
 
 
@@ -46,7 +48,7 @@ def getUserType():
 
 
 def publicUserPrompt():
-    print("As a public user, what would you like to do?")
+    print("\nAs a public user, what would you like to do?")
     print("\t1. Send an encrypted message")
     print("\t2. Authenticate a digital signature")
     print("\t3. Exit")
@@ -56,19 +58,20 @@ def publicUserPrompt():
 
 
 def sendMessagePrompt(public_key, n):
-    print("sendMessagePrompt")
-    message = input("Enter a message: ")
+    message = input("\tEnter a message: ")
     encrypted_message = rsa.encryptMessage(message, public_key, n)
-    encrypted_message = message
+    print("\n\n")
     return encrypted_message
 
 
-def authenticatePrompt(message_list):
+def authenticatePrompt(message_list, public_key):
+    print("\n\n")
     print("The following messages are available: ")
 
     # if there are no messages
     if (len(message_list) <= 0):
         print("No messages to authenticate")
+        print("\n\n")
         return
 
     displayMessages(message_list)
@@ -84,10 +87,11 @@ def authenticatePrompt(message_list):
         # else:
             # print("Signature is not valid")
         break
+    print("not implemented")
 
 
 def privateUserPrompt():
-    print("As a private user, what would you like to do?")
+    print("\nAs a private user, what would you like to do?")
     print("\t1. Decrypt a received message")
     print("\t2. Digitally sign a message")
     print("\t3. Show the keys")
@@ -109,32 +113,35 @@ def decryptPrompt(message_list, private_key, n):
     displayMessages(message_list)
     while (1):
         choice = int(input("Enter your choice: "))
-        if (len(message_list) > choice or choice < 1):
+        if (len(message_list) < choice or choice < 1):
             print("Invalid choice")
             continue
-
         choice -= 1
-        print(choice)
+
         message = rsa.decryptMessage(message_list[choice], private_key, n)
-        print(message)
+        print("Decrypted Message: ", message)
         break
     return
 
 
+# TODO
 def signMessagePrompt():
-    print("signMessagePrompt")
-    message = input("Enter a message:  ")
+    message = input("\tEnter a message:  ")
     print("Message signed and sent.")
+    print("NOT IMPLEMENTED")
     return message
 
 
 def showKeysPrompt(private_key, public_key):
-    print("The private key is: ", private_key,
+    print("\n\nThe private key is: ", private_key,
           " The public key is: ", public_key)
+    print("\n\n")
 
 
 def generatePrompt():
+    print("\n\n")
     private_key, public_key, n = rsa.generateKeys()
+    print("\n\n")
 
 
 def availableMessagePrompt():

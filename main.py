@@ -3,6 +3,7 @@ import src.InputOutput as IO
 
 
 public_key, private_key, n = RSA.generateKeys()
+print(public_key, private_key, n)
 list = []
 init_message = RSA.encryptMessage("test pre message", public_key, n)
 list.append(init_message)
