@@ -34,8 +34,8 @@ class TestGCDMethods(unittest.TestCase):
                     a = rand.randrange(1, 1000, 1)
                     b = rand.randrange(1, 1000, 1)
                 x, y, d = GCD.extendedGCD(a, b)
-                self.assertEquals(d, GCD.gcd(a, b))
-                self.assertEquals(d, (a * x + b * y))
+                self.assertEqual(d, GCD.gcd(a, b))
+                self.assertEqual(d, (a * x + b * y))
 
 
 if __name__ == '__main__':
