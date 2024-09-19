@@ -7,7 +7,7 @@ def publicLoop(public_key, n, list):
     while (1):
         choice = publicUserPrompt()
         if (choice == "1"):
-            decryptPrompt(list, public_key)
+            sendMessagePrompt(list, public_key)
         elif (choice == "2"):
             authenticatePrompt(list, public_key)
         elif (choice == "3"):
@@ -18,16 +18,14 @@ def publicLoop(public_key, n, list):
 
 
 def privateLoop(private_key, public_key, n, list):
-    print("in privateLoop")
-    list = ["one", "two", "three"]
     while (1):
         choice = privateUserPrompt()
 
         if (choice == "1"):
-            decryptPrompt(list, public_key, n)
+            decryptPrompt(list, private_key, n)
         elif (choice == "2"):
-            encrypted_message = sendMessagePrompt(private_key, n)
-            list.add(encrypted_message)
+            encrypted_message = sendMessagePrompt(public_key, n)
+            list.append(encrypted_message)
         elif (choice == "3"):
             showKeysPrompt(private_key, public_key)
         elif (choice == "4"):
@@ -57,10 +55,10 @@ def publicUserPrompt():
     return choice
 
 
-def sendMessagePrompt(private_key, n):
+def sendMessagePrompt(public_key, n):
     print("sendMessagePrompt")
     message = input("Enter a message: ")
-    # encrypted_message = rsa.encrypt(private_key, message, n)
+    encrypted_message = rsa.encryptMessage(message, public_key, n)
     encrypted_message = message
     return encrypted_message
 
@@ -100,7 +98,7 @@ def privateUserPrompt():
     return choice
 
 
-def decryptPrompt(message_list, public_key):
+def decryptPrompt(message_list, private_key, n):
     print("The following messages are available to decrypt: ")
 
     # if there are no messages
@@ -115,8 +113,10 @@ def decryptPrompt(message_list, public_key):
             print("Invalid choice")
             continue
 
-        # message = rsa.decryptMessage(message_list[choice], public_key)
-        # print(message)
+        choice -= 1
+        print(choice)
+        message = rsa.decryptMessage(message_list[choice], private_key, n)
+        print(message)
         break
     return
 
@@ -134,7 +134,7 @@ def showKeysPrompt(private_key, public_key):
 
 
 def generatePrompt():
-    private_key, public_key = rsa.generateKeys()
+    private_key, public_key, n = rsa.generateKeys()
 
 
 def availableMessagePrompt():

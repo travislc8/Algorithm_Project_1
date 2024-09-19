@@ -1,6 +1,5 @@
 import src.RSA as RSA
 import unittest
-import random as rand
 
 
 def keyTest(q, p):
@@ -9,6 +8,15 @@ def keyTest(q, p):
     privateKey = RSA.findPrivateKey(phi, publicKey)
     temp = (publicKey * privateKey) % phi
     return temp
+
+
+def encryptDecrypt(message, p, q):
+    private_key, public_key, n = RSA.generateKeysFromPrime(p, q)
+
+    encripted_message = RSA.encryptMessage(message, public_key, n)
+    decripted_message = RSA.decryptMessage(
+        encripted_message, private_key, n)
+    return decripted_message
 
 
 class TestGCDMethods(unittest.TestCase):
@@ -24,16 +32,26 @@ class TestGCDMethods(unittest.TestCase):
         temp = keyTest(569, 547)
         self.assertEqual(temp, 1)
 
-    def test_encriptionDecryption(self):
+    def test_encriptionDecryptionOld(self):
         private_key, public_key, n = RSA.generateKeys()
-        print(private_key, public_key)
-        message = [0, 1, 2, 3]
+
+        message = "test message"
         encripted_message = RSA.encryptMessage(message, public_key, n)
-        print(encripted_message)
         decripted_message = RSA.decryptMessage(
             encripted_message, private_key, n)
 
         self.assertEqual(message, decripted_message)
+
+    def test_encriptionDecryption(self):
+        message = "test message"
+        return_message = encryptDecrypt(message, 757, 733)
+        self.assertEqual(message, return_message)
+        return_message = encryptDecrypt(message, 569, 547)
+        self.assertEqual(message, return_message)
+        return_message = encryptDecrypt(message, 877, 907)
+        self.assertEqual(message, return_message)
+        return_message = encryptDecrypt(message, 787, 797)
+        self.assertEqual(message, return_message)
 
 
 if __name__ == '__main__':
