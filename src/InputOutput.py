@@ -1,4 +1,5 @@
 import src.RSA as rsa
+import src.Signature as sig
 
 
 def publicLoop(public_key, n, list):
@@ -8,7 +9,7 @@ def publicLoop(public_key, n, list):
             encrypted_message = sendMessagePrompt(public_key, n)
             list.append(encrypted_message)
         elif (choice == "2"):
-            authenticatePrompt(list, public_key)
+            authenticatePrompt(list, "test", public_key, n)
         elif (choice == "3"):
             print("\n\n")
             break
@@ -24,7 +25,7 @@ def privateLoop(private_key, public_key, n, list):
         if (choice == "1"):
             decryptPrompt(list, private_key, n)
         elif (choice == "2"):
-            encrypted_message = sendMessagePrompt(public_key, n)
+            encrypted_message = sendMessagePrompt(private_key, n)
             list.append(encrypted_message)
         elif (choice == "3"):
             showKeysPrompt(private_key, public_key)
@@ -57,14 +58,14 @@ def publicUserPrompt():
     return choice
 
 
-def sendMessagePrompt(public_key, n):
+def sendMessagePrompt(key, n):
     message = input("\tEnter a message: ")
-    encrypted_message = rsa.encryptMessage(message, public_key, n)
+    encrypted_message = sig.signMessage(message, key, n)
     print("\n\n")
     return encrypted_message
 
 
-def authenticatePrompt(message_list, public_key):
+def authenticatePrompt(message_list, signature, public_key, n):
     print("\n\n")
     print("The following messages are available: ")
 
@@ -81,13 +82,14 @@ def authenticatePrompt(message_list, public_key):
             print("Invalid choice")
             continue
 
-        # check = signature.authenticate(message_list[choice])
-        # if (check):
-            # print("Signature is valid")
-        # else:
-            # print("Signature is not valid")
+        choice -= 1
+        check = sig.verifySignature(
+            message_list[choice], signature, public_key, n)
+        if (check):
+            print("Signature is valid")
+        else:
+            print("Signature is not valid")
         break
-    print("not implemented")
 
 
 def privateUserPrompt():
