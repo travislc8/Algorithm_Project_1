@@ -13,18 +13,3 @@ def verifySignature(signature, name, e, n):
     return verification == name
 
 
-'''def main():
-
-    d, e, n = rsa.generateKeys()
-    print(d,e,n)
-    
-    name = "Alice"
-
-    signature = signMessage(name, d, n)
-    #print(f"Signature: {signature}")
-
-    verification = verifySignature(signature, name, e, n)
-    print(f"Verification successful: {verification}")
-
-if __name__ == "__main__":
-    main()'''
