@@ -3,20 +3,18 @@ import src.InputOutput as IO
 
 
 public_key, private_key, n = RSA.generateKeys()
-print(public_key, private_key, n)
-list = []
-init_message = RSA.encryptMessage("test pre message", public_key, n)
-list.append(init_message)
-print(list)
 print("RSA keys have been generated.")
+message_list = []
+signature_list = []
 
 while (1):
     user_type = IO.getUserType()
 
     if (user_type == "1"):
-        IO.publicLoop(public_key, n, list)
+        IO.publicLoop(public_key, n, message_list, signature_list)
     elif (user_type == "2"):
-        IO.privateLoop(private_key, public_key, n, list)
+        IO.privateLoop(private_key, public_key, n,
+                       message_list, signature_list)
     elif (user_type == "3"):
         print("Bye for now")
         break

@@ -2,14 +2,14 @@ import src.RSA as rsa
 import src.Signature as sig
 
 
-def publicLoop(public_key, n, list):
+def publicLoop(public_key, n, message_list, signature_list):
     while (1):
         choice = publicUserPrompt()
         if (choice == "1"):
             encrypted_message = sendMessagePrompt(public_key, n)
-            list.append(encrypted_message)
+            message_list.append(encrypted_message)
         elif (choice == "2"):
-            authenticatePrompt(list, "test", public_key, n)
+            authenticatePrompt(signature_list, public_key, n)
         elif (choice == "3"):
             print("\n\n")
             break
@@ -18,15 +18,16 @@ def publicLoop(public_key, n, list):
     return public_key, list
 
 
-def privateLoop(private_key, public_key, n, list):
+def privateLoop(private_key, public_key, n, message_list, signature_list):
     while (1):
         choice = privateUserPrompt()
 
         if (choice == "1"):
-            decryptPrompt(list, private_key, n)
+            decryptPrompt(message_list, private_key, n)
         elif (choice == "2"):
-            encrypted_message = sendMessagePrompt(private_key, n)
-            list.append(encrypted_message)
+            encrypted_message, signature = sendSignaturePrompt(private_key, n)
+            signature_list.append(encrypted_message)
+            signature_list.append(signature)
         elif (choice == "3"):
             showKeysPrompt(private_key, public_key)
         elif (choice == "4"):
@@ -58,33 +59,48 @@ def publicUserPrompt():
     return choice
 
 
+def sendSignaturePrompt(key, n):
+    message = input("\tEnter a message: ")
+    encrypted_message, signature = sig.signMessage(message, key, n)
+    print("\n\n")
+    return encrypted_message, signature
+
+
 def sendMessagePrompt(key, n):
     message = input("\tEnter a message: ")
-    encrypted_message = sig.signMessage(message, key, n)
+    encrypted_message = rsa.encryptMessage(message, key, n)
     print("\n\n")
     return encrypted_message
 
 
-def authenticatePrompt(message_list, signature, public_key, n):
+def authenticatePrompt(signature_list, public_key, n):
     print("\n\n")
     print("The following messages are available: ")
 
     # if there are no messages
-    if (len(message_list) <= 0):
+    if (len(signature_list) <= 0):
         print("No messages to authenticate")
         print("\n\n")
         return
 
-    displayMessages(message_list)
+    i = 0
+    count = 1
+    while i < len(signature_list):
+        if i % 2 == 1:
+            print("\t", count, " = ", signature_list[i])
+            count += 1
+        i += 1
+
     while (1):
         choice = int(input("Enter your choice: "))
-        if (len(message_list) > choice or choice < 1):
+        if (choice > (len(signature_list)/2) or choice < 1):
             print("Invalid choice")
             continue
 
-        choice -= 1
+        choice = (choice - 1) * 2
+
         check = sig.verifySignature(
-            message_list[choice], signature, public_key, n)
+            signature_list[choice], signature_list[choice + 1], public_key, n)
         if (check):
             print("Signature is valid")
         else:
