@@ -19,7 +19,7 @@ while (1):
         IO.publicLoop(public_key, n, message_list, signature_list)
     # if the user specifies they are the owner of the keys
     elif (user_type == "2"):
-        private_key, public_key, n = IO.privateLoop(
+        private_key, public_key, n, message_list, signature_list = IO.privateLoop(
             private_key, public_key, n,
             message_list, signature_list)
     # if the use specifies to exit the program

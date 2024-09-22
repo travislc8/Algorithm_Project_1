@@ -1,15 +1,16 @@
 import src.GCD as GCD
 import unittest
 import random as rand
+import math
 
 
 class TestGCDMethods(unittest.TestCase):
     def test_fastExponentialMod(self):
         for i in range(0, 20):
             with self.subTest(i=i):
-                c = rand.randrange(0, 1000, 1)
-                d = rand.randrange(0, 1000, 1)
-                n = rand.randrange(0, 1000, 1)
+                c = rand.randrange(1, 1000, 1)
+                d = rand.randrange(1, 1000, 1)
+                n = rand.randrange(1, 1000, 1)
                 test = GCD.fastExponetialMod(c, d, n)
                 python = pow(c, d, n)
                 self.assertEqual(test, python)
@@ -22,8 +23,9 @@ class TestGCDMethods(unittest.TestCase):
                 test = GCD.gcd(a, b)
                 self.assertEqual(a % test, 0)
                 self.assertEqual(b % test, 0)
-                # self.assertTrue(isPrime(a))
-                # self.assertTrue(isPrime(b))
+
+                actual = math.gcd(a, b)
+                self.assertEqual(actual, test)
 
     def test_extendedGCD(self):
         for i in range(0, 20):

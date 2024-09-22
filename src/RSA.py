@@ -1,13 +1,13 @@
 import random as rand
 import src.GCD as gcd
+import src.PrimeNumber as prime
 
 
 # function that generates the public and private keys
 # returns: public and private key and n
 def generateKeys():
     # TODO
-    # p,q = prime.generatePrimeNumbers()
-    p, q = 7, 17
+    p, q = prime.generatePrimes()
     n = p * q
     phi = (p - 1) * (q - 1)
     # calls funciton to generate the public key based on given input

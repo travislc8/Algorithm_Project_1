@@ -1,3 +1,4 @@
+# fuction for fast exponentiation
 def fastExponetialMod(constant, power, mod):
     if power == 0:
         return 1
@@ -9,6 +10,7 @@ def fastExponetialMod(constant, power, mod):
         return constant * (temp**2 % mod) % mod
 
 
+# recursive greatest common denominator function
 def gcd(a, b):
     if b == 0:
         return a
@@ -16,9 +18,8 @@ def gcd(a, b):
         return gcd(b, a % b)
 
 
+# recuresive function for extended greatest common denominator
 def extendedGCD(a, b):
-    # if a < b:
-    # raise ValueError("variable a must be greater than variable b")
     if b == 0:
         return (1, 0, a)
     (x, y, d) = extendedGCD(b, a % b)

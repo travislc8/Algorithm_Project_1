@@ -48,11 +48,13 @@ def privateLoop(private_key, public_key, n, message_list, signature_list):
         elif (choice == "4"):
             # generates new keys
             private_key, public_key, n = generatePrompt()
+            message_list.clear()
+            signature_list.clear()
 
         # if the user specifies to end the private loop
         elif (choice == "5"):
             print("\n\n")
-            return private_key, public_key, n
+            return private_key, public_key, n, message_list, signature_list
 
         # if the user enters an invalid choice
         else:

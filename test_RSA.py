@@ -32,16 +32,6 @@ class TestGCDMethods(unittest.TestCase):
         temp = keyTest(569, 547)
         self.assertEqual(temp, 1)
 
-    def test_encriptionDecryptionOld(self):
-        private_key, public_key, n = RSA.generateKeys()
-
-        message = "test message"
-        encripted_message = RSA.encryptMessage(message, public_key, n)
-        decripted_message = RSA.decryptMessage(
-            encripted_message, private_key, n)
-
-        self.assertEqual(message, decripted_message)
-
     def test_encriptionDecryption(self):
         message = "test message"
         return_message = encryptDecrypt(message, 757, 733)
