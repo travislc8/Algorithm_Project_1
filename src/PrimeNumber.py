@@ -13,12 +13,6 @@ def is_prime(n):
         i += 6
     return True
 
-def main():
-    number = int(input("Enter a number to check if it is prime: "))
-    if is_prime(number):
-        print(f"{number} is a prime number.")
-    else:
-        print(f"{number} is not a prime number.")
 
-if __name__ == "__main__":
-    main()
+def generatePrimes():
+    return 3, 4
