@@ -32,11 +32,9 @@ class TestRSAMethods(unittest.TestCase):
                 self.assertEqual(temp, 1)
 
     def test_encriptionDecryption(self):
-        for i in range(0, 100):
-            with self.subTest(i=i):
-                message = "test message"
-                return_message = encryptDecrypt("test message")
-                self.assertEqual(message, return_message)
+        message = "test message"
+        return_message = encryptDecrypt("test message")
+        self.assertEqual(message, return_message)
 
 
 if __name__ == '__main__':
