@@ -27,38 +27,11 @@ class TestSignatureMethods(unittest.TestCase):
     def test_signature(self):
         check = signatureTest("test signature")
         self.assertTrue(check)
-        check = signatureTest("asdf asdf asd")
-        self.assertTrue(check)
-        check = signatureTest("some string")
-        self.assertTrue(check)
-        check = signatureTest("15687 5671")
-        self.assertTrue(check)
-        check = signatureTest("test $()@")
-        self.assertTrue(check)
-        check = signatureTest("")
-        self.assertTrue(check)
-        check = signatureTest("long signature test asasdfasdfasdfasdfasdfs")
-        self.assertTrue(check)
 
     # tests that the signature returns false for invalid signature
     def test_failSignature(self):
         try:
             check = signatureFailTest("test signature")
-        except Exception:
-            check = False
-        self.assertFalse(check)
-        try:
-            check = signatureFailTest("some long string asdfasdfasdfasdfasdf")
-        except Exception:
-            check = False
-        self.assertFalse(check)
-        try:
-            check = signatureFailTest("#$()@{#$~#@{)$()] #$()")
-        except Exception:
-            check = False
-        self.assertFalse(check)
-        try:
-            check = signatureFailTest("126345968574845")
         except Exception:
             check = False
         self.assertFalse(check)

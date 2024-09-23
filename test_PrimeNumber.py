@@ -4,7 +4,7 @@ import src.PrimeNumber as prime
 
 class TestPrimeNumber(unittest.TestCase):
     def test_PrimeNumber(self):
-        for i in range(0, 100):
+        for i in range(0, 1000):
             with self.subTest(i=i):
                 p, q = prime.generatePrimes()
                 self.assertTrue(p > 10000)

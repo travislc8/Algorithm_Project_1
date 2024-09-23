@@ -1,8 +1,10 @@
 import src.RSA as RSA
+import src.PrimeNumber as prime
 import unittest
 
 
-def keyTest(q, p):
+def keyTest():
+    p, q = prime.generatePrimes()
     phi = (p - 1) * (q - 1)
     publicKey = RSA.generatePublicKey(phi, p, q)
     privateKey = RSA.findPrivateKey(phi, publicKey)
@@ -10,38 +12,31 @@ def keyTest(q, p):
     return temp
 
 
-def encryptDecrypt(message, p, q):
-    private_key, public_key, n = RSA.generateKeysFromPrime(p, q)
-
+def encryptDecrypt(message):
+    private_key, public_key, n = RSA.generateKeys()
+    # print(private_key, " _____ ",  public_key, n)
+    # private_key = 4895507
+    # public_key = 73559003
+    # n = 240202517
     encripted_message = RSA.encryptMessage(message, public_key, n)
     decripted_message = RSA.decryptMessage(
         encripted_message, private_key, n)
     return decripted_message
 
 
-class TestGCDMethods(unittest.TestCase):
+class TestRSAMethods(unittest.TestCase):
     def test_keysAreValid(self):
-        temp = keyTest(7, 11)
-        self.assertEqual(temp, 1)
-        temp = keyTest(13, 17)
-        self.assertEqual(temp, 1)
-        temp = keyTest(29, 53)
-        self.assertEqual(temp, 1)
-        temp = keyTest(97, 347)
-        self.assertEqual(temp, 1)
-        temp = keyTest(569, 547)
-        self.assertEqual(temp, 1)
+        for i in range(0, 100):
+            with self.subTest(i=i):
+                temp = keyTest()
+                self.assertEqual(temp, 1)
 
     def test_encriptionDecryption(self):
-        message = "test message"
-        return_message = encryptDecrypt(message, 757, 733)
-        self.assertEqual(message, return_message)
-        return_message = encryptDecrypt(message, 569, 547)
-        self.assertEqual(message, return_message)
-        return_message = encryptDecrypt(message, 877, 907)
-        self.assertEqual(message, return_message)
-        return_message = encryptDecrypt(message, 787, 797)
-        self.assertEqual(message, return_message)
+        for i in range(0, 100):
+            with self.subTest(i=i):
+                message = "test message"
+                return_message = encryptDecrypt("test message")
+                self.assertEqual(message, return_message)
 
 
 if __name__ == '__main__':
